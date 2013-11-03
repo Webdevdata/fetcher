@@ -16,16 +16,22 @@ def connect(url):
     try:
         f = urlopen("http://" + url);
         return f;
-    except HTTPError, e:
+    except URLError, e:
         try:
             f = urlopen("https://" + url);
             return f;
-        except HTTPError, e:
-            print "HTTPError:", e.code, url
         except URLError, e:
-            print "URLError:", e.reason, url
-    except URLError, e:
-        print "URLError:", e.reason, url
+            try:
+                f = urlopen("http://www." + url);
+                return f;
+            except URLError, e:
+                try:
+                    f = urlopen("https://www." + url);
+                    return f;
+                except HTTPError, e:
+                    print "HTTPError:", e.code, url
+                except URLError, e:
+                    print "URLError:", e.reason, url
 
 def downloadFile(url, dir):
     os.chdir(dir)
