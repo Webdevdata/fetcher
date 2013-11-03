@@ -12,16 +12,39 @@ def createDir():
     os.mkdir(dirname)
     return dirname
 
+def connect(url):
+    try:
+        f = urlopen("http://" + url);
+        return f;
+    except URLError, e:
+        try:
+            f = urlopen("https://" + url);
+            return f;
+        except URLError, e:
+            try:
+                f = urlopen("http://www." + url);
+                return f;
+            except URLError, e:
+                try:
+                    f = urlopen("https://www." + url);
+                    return f;
+                except HTTPError, e:
+                    print "HTTPError:", e.code, url
+                except URLError, e:
+                    print "URLError:", e.reason, url
+
 def downloadFile(url, dir):
     os.chdir(dir)
     url = url.strip()
-    try: 
+    try:
         print "Downloading: ", url
         if url.startswith("http://"):
             url = url[7:]
+        if url.startswith("https://"):
+            url = url[8:]
         urlhost = url.split("/")[0]
         urlpath = "/".join(url.split("/")[1:])
-        f = urlopen("http://" + url)
+        f = connect(urlhost);
         hash = hashlib.md5()
         hash.update(url)
         dir = hash.hexdigest()[:2]
