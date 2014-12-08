@@ -16,7 +16,7 @@ Methodology
 Usage
 -----
 
-If your on Linux or OS X, simply run `./getData.sh` and you should be
+If you're on Linux or OS X, simply run `./getData.sh` and you should be
 good to go. If you're on Windows, [cygwin](http://www.cygwin.com/) may
 be your best bet.
 
@@ -54,6 +54,8 @@ Results
 The resulting directory structure is:
 
 -   A root directory of the pattern "webdevdata.org-YYYY-MM-DD-HHMMSS"
+-   A "log.txt" file within this directory contains a list of errors
+    encountered across all downloads.
 -   Sub-directories are 16 bit hashes of the URLs below them. Used to
     verify there are not toom many files in a single directory.
 
