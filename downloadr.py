@@ -17,45 +17,38 @@ def createDir():
 def connect(url):
     try:
         try:
-            f = urlopen("http://" + url)
-            return f
-        except URLError, e:
+            root = urlopen("http://" + url)
+            return root
+        except URLError:
             try:
-                f = urlopen("https://" + url)
-                return f
-            except URLError, e:
+                root = urlopen("https://" + url)
+                return root
+            except URLError:
                 try:
-                    f = urlopen("http://www." + url)
-                    return f
-                except URLError, e:
-                    try:
-                        f = urlopen("https://www." + url)
-                        return f
-                    except:
-                        raise
-    except HTTPError, e:
-        log("HTTPError: " + str(e.code) + " " + str(url))
-    except URLError, e:
-        log("URLError: " + str(e.reason) + " " + str(url))
-    except Exception, e:
-        log(str(e) + " " + str(url))
+                    root = urlopen("http://www." + url)
+                    return root
+                except URLError:
+                    root = urlopen("https://www." + url)
+                    return root
+    except:
+        raise
 
 
 def download_file(url, dir):
-    logging.basicConfig(
-        format='%(asctime)s %(message)s',
-        filename=os.path.join(dir, 'log.txt'))
-    os.chdir(dir)
-    url = url.strip()
-    print "Downloading: ", url
-    if url.startswith("http://"):
-        url = url[7:]
-    if url.startswith("https://"):
-        url = url[8:]
-    urlhost = url.split("/")[0]
-    root = connect(urlhost)
-    if root:
-        try:
+    try:
+        logging.basicConfig(
+            format='%(asctime)s %(message)s',
+            filename=os.path.join(dir, 'log.txt'))
+        os.chdir(dir)
+        url = url.strip()
+        print "Downloading: ", url
+        if url.startswith("http://"):
+            url = url[7:]
+        if url.startswith("https://"):
+            url = url[8:]
+        urlhost = url.split("/")[0]
+        root = connect(urlhost)
+        if root:
             hash = hashlib.md5()
             hash.update(url)
             dir = hash.hexdigest()[:2]
@@ -72,8 +65,13 @@ def download_file(url, dir):
             with open(filename + ".hdr.txt", "wb") as local_file:
                 local_file.write(str(root.getcode()) + "\n" + str(root.info()))
                 local_file.close()
-        except Exception, e:
-            log(str(e) + " " + str(url))
+    except HTTPError, e:
+        log("HTTPError: " + str(e.code) + " [" + str(url) + "]")
+    except URLError, e:
+        log("URLError: " + str(e.reason) + " [" + str(url) + "]")
+    except Exception as exception:
+        log(type(exception).__name__ + ": [" + str(exception)
+            + "] [" + str(url) + "]")
 
 
 def log(message):
