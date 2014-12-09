@@ -32,7 +32,7 @@ Dependencies
 ------------
 
 -   Python (Tested with 2.7)
--   curl
+-   curl or wget (it will use curl in preference)
 -   zcat
 -   [python-magic](https://github.com/ahupp/python-magic), which also
     requires [libmagic](http://www.darwinsys.com/file/) (which you can
