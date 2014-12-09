@@ -31,12 +31,13 @@ that by doing something like `cat resource_urls.txt | ./downloadr.py`
 Dependencies
 ------------
 
--   Python (Tested with 2.7)
--   curl or wget (it will use curl in preference)
--   zcat
+-   Python (tested with 2.7).
+-   curl or wget (it will use curl in preference).
 -   [python-magic](https://github.com/ahupp/python-magic), which also
     requires [libmagic](http://www.darwinsys.com/file/) (which you can
-    install via homebrew)
+    install via homebrew). The Debian "python-magic" package is not the
+    same thing. For all users, we recommend the virtualenv-based
+    approach, below.
 
 If you use [virtualenv](https://github.com/pypa/virtualenv), you can
 install the required Python package locally:
