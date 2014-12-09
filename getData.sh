@@ -9,4 +9,4 @@ if [ ! -f $URLS ]; then
     rm $URLS_TMP
 fi
 DIR=`./downloadr.py create`
-cat $URLS | xargs -I{} -n 1 -P64 ./downloadr.py download {} $DIR
+cat $URLS | xargs -I {} -n 1 -P 64 ./downloadr.py download {} $DIR

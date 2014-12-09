@@ -13,8 +13,8 @@ Methodology
     **Note:** only the top 100,000 sites are kept for downloding.
 
 -   The URLs are then fed to a Python script that downloads the HTML
-    files and their HTTP headers (each download is spawned as a separate
-    Python process).
+    files and their HTTP headers using a process pool (to minimize
+    waiting).
 
     Errors are reported to a log file (as below).
 
