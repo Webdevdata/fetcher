@@ -15,20 +15,21 @@ def createDir():
 
 
 def connect(url):
+    wait = 60
     try:
         try:
-            root = urlopen("http://" + url)
+            root = urlopen("http://" + url, timeout=wait)
             return root
         except URLError:
             try:
-                root = urlopen("https://" + url)
+                root = urlopen("https://" + url, timeout=wait)
                 return root
             except URLError:
                 try:
-                    root = urlopen("http://www." + url)
+                    root = urlopen("http://www." + url, timeout=wait)
                     return root
                 except URLError:
-                    root = urlopen("https://www." + url)
+                    root = urlopen("https://www." + url, timeout=wait)
                     return root
     except:
         raise
