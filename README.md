@@ -26,7 +26,8 @@ good to go. If you're on Windows, [cygwin](http://www.cygwin.com/) may
 be your best bet.
 
 If you want to fetch resources other than Alexa's top HTMLs, you can do
-that by doing something like `cat resource_urls.txt | ./downloadr.py`
+that by doing something like
+`cat urls.txt | xargs -I % -n 1 -P64 ./downloadr.py download % webdevdata.org-2013-12-06-200358/`
 
 Dependencies
 ------------
@@ -87,4 +88,3 @@ tags/attributes with CSS-like queries.
 See the [Queries on
 WebDevData](https://github.com/baptistelebail/webdevdata.org/wiki/Queries-on-WebDevData)
 wiki.
-
